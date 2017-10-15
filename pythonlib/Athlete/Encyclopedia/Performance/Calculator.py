@@ -41,21 +41,21 @@ class Calculator():
 
 		if weight == None:
 			self._logger.fatal("weight was not defined")
-			throw new Error("weight was not defined")
+			raise Exception("weight was not defined")
 
 		if weight < 0:
 			self._logger.fatal("weight was '%d'" % weight)
-			throw new Error("weight was '%d'" % weight)
+			raise Exception("weight was '%d'" % weight)
 
 	def _is_jump_valid(jump):
 
 		if jump == None:
 			self._logger.fatal("jump was not defined")
-			throw new Error("jump was not defined")
+			raise Exception("jump was not defined")
 
 		if jump < 0:
 			self._logger.fatal("jump was '%d'" % jump)
-			throw new Error("jump was '%d'" % jump)
+			raise Exception("jump was '%d'" % jump)
 
 
 	def getEstimated40YardDashTimeFromCourtSprint(sprint_time):
@@ -80,11 +80,11 @@ class Calculator():
 
 		if sprint_time == None:
 			self._logger.fatal("sprint_time was not defined")
-			throw new Error("sprint_time was not defined")
+			raise Exception("sprint_time was not defined")
 
 		if sprint_time < 0:
 			self._logger.fatal("sprint_time was '%d'" % sprint_time)
-			throw new Error("sprint_time was '%d'" % sprint_time)
+			raise Exception("sprint_time was '%d'" % sprint_time)
 
 
 	def getEstimated100YardDashTimeFrom40YardDashTime(dash_time):
@@ -109,11 +109,11 @@ class Calculator():
 
 		if dash_time == None:
 			self._logger.fatal("dash_time was not defined")
-			throw new Error("dash_time was not defined")
+			raise Exception("dash_time was not defined")
 
 		if dash_time < 0:
 			self._logger.fatal("dash_time was '%d'" % dash_time)
-			throw new Error("dash_time was '%d'" % dash_time)
+			raise Exception("dash_time was '%d'" % dash_time)
 
 
 	def getAbsoluteStrength(force, weight):
@@ -145,11 +145,11 @@ class Calculator():
 
 		if force == None:
 			self._logger.fatal("force was not defined")
-			throw new Error("force was not defined")
+			raise Exception("force was not defined")
 
 		if force < 0:
 			self._logger.fatal("force was '%d'" % force)
-			throw new Error("force was '%d'" % force)
+			raise Exception("force was '%d'" % force)
 
 
 	def getRelativeStrength(force, weight, bodyweight):
@@ -186,11 +186,11 @@ class Calculator():
 
 		if bodyweight == None:
 			self._logger.fatal("bodyweight was not defined")
-			throw new Error("bodyweight was not defined")
+			raise Exception("bodyweight was not defined")
 
 		if bodyweight < 0:
 			self._logger.fatal("bodyweight was '%d'" % bodyweight)
-			throw new Error("bodyweight was '%d'" % bodyweight)
+			raise Exception("bodyweight was '%d'" % bodyweight)
 
 
 	def getAcceleration(distance, time):
@@ -222,10 +222,10 @@ class Calculator():
 
 		if distance == None:
 			self._logger.fatal("distance was not defined")
-			throw new Error("distance was not defined")
+			raise Exception("distance was not defined")
 
 		if distance < 0:
 			self._logger.fatal("distance was '%d'" % distance)
-			throw new Error("distance was '%d'" % distance)
+			raise Exception("distance was '%d'" % distance)
 
 
