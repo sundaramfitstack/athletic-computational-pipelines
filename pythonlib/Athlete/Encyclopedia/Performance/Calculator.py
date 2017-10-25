@@ -30,6 +30,14 @@ class Calculator():
 		if not self._is_jump_valid(jump)
 			sys.exit(1)
 
+		## Description of values that follow:
+		## 
+		## 2.2 - convertPoundsToKilo ---> pound to kg conversion
+		## 0.0254 - convertInchesToMeters --> inches to meters conversion
+		## -2259 - razu1
+		## 36.49 - razu2
+		## 6983 - razu3
+
 		power = -2259 + 36.49 * (weight/2.2) + 6983 * (jump * 0.0254)
 
 		self._logger.info("Calculated power %d for weight %d and vertical jump %d" % (power, weight, jump))
@@ -58,20 +66,50 @@ class Calculator():
 			raise Exception("jump was '%d'" % jump)
 
 
-	def getEstimated40YardDashTimeFromCourtSprint(sprint_time):
-		'''((40 / (0.5 * 22.86 / sprint time))^0.5) + 0.3
-
+	def getEstimated40YardDashTimeFromCourtSprint(sprint_time, weight):
+		'''
 			parameters are:
 
 			sprint_time (time in seconds for 3/4 court sprint)
+
+			weight (weight in pounds)
 		'''
 
 		if not self._is_court_sprint_time_valid(sprint_time):
 			sys.exit(1)
 
-		dash_time = ((40 / (0.5 * 22.86 / sprint_time))^0.5) + 0.3
 
-		self._logger.info("Calculated estimated 40 yard dash time '%d' from 3/4 court sprint time '%d'" % (dash_time, sprint_time))
+		## Est 40yd dash time = [40/(.5*acceleration)]^(.5)] + W
+		## acceleration = (2*distance)/(time^2)
+		##
+		## 40 - estFortyDashConst1
+		## 0.5 - estFortyDashConst2
+		## 22.86 - threeQuarterCourtDistMeters - the distance of 3/4 court in meters (i.e. 75 feet)
+		## 2 - estFortyAccelConst
+		## W -  constant that changes based on an athlete's weight as per the following:
+		## < 190lbs: W = 0.30
+		## 190lbs - 200lbs: W = 0.35
+		## 200lbs - 210lbs: W = 0.40
+		## 210lbs - 220lbs: W = 0.45
+		## 220lbs+: W = .50
+
+		acceleration = (2 * 40)/(sprint_time * sprint_time)
+
+		if weight < 190:
+			w_val = 0.30
+		else if weight < 201:
+			w_val = 0.35
+		else if weight < 210:
+			w_val = 0.40
+		else if weight < 220:
+			w_val = 0.45
+		else:
+			w_val = 0.50
+
+
+		dash_time = (40/(0.5 * acceleration)^0.5) + w_val
+
+		self._logger.info("Calculated estimated 40 yard dash time '%d' from 3/4 court sprint time '%d' and weight '%d'" % (dash_time, sprint_time, weight))
 
 		return dash_time
 
@@ -97,6 +135,8 @@ class Calculator():
 
 		if not self._is_40_yard_dash_time_valid(dash_time):
 			sys.exit(1)
+
+		## 2.54 - estHundredMeterConst
 
 		dash_time_100 = dash_time / 2.54 + dash_time + dash_time
 
@@ -211,7 +251,9 @@ class Calculator():
 			sys.exit(1)
 
 	
-		acceleration = distance / time * time
+		## .9144 - convertYardsToMeters
+
+		acceleration = (distance * 0.9144) / time * time
 
 		self._logger.info("Calculated acceleration '%d' from distance '%d' time '%d'" % (acceleration, distance, time))
 
